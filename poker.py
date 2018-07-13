@@ -4,8 +4,25 @@ def besthand(hands):
 
 def handrank(hand):
     """ function to return the rank of a particular hand according to poker rules """
-    pass
-
+    # straight flush
+    if straight(ranks) and flush(hand):
+        return (8, max(card_ranks))  # card_ranks -> 1, 2, 3, 4, 5, 6, 7, 8, 9, T, J, K, Q, A
+    elif kind(4, ranks):
+        return (7, kind(4, ranks), kind(1, ranks))
+    elif kind(3, ranks) and kind(2, ranks):
+        return (6, kind(3, ranks), kind(2, ranks))
+    elif flush(hand):
+        return (5, ranks)   # we could also use the high card
+    elif straight(ranks):
+        return (4, max(ranks))
+    elif kind(3, ranks):
+        return (2, kind(3, ranks), ranks)
+    elif two_pair(ranks):
+        return (2, two_pair(ranks), ranks)
+    elif kind(2, ranks):
+        return (1, kind(2, ranks), ranks)
+    else:
+        return (0, ranks)
 
 def test_poker():
     """ tests for functions in poker program """
@@ -17,11 +34,12 @@ def test_poker():
     assert besthand([hh, hh]) == hh
     assert besthand([hh]) == hh
     assert besthand([sf] + 100*[hh]) == sf
-
+    
     # 1st 2 is ranking of the hand among all hands, 3 is the rank of the card
     assert handrank(tk) == (2, 3)
 
     # 1st 6 is the rank of the hand among all hands, 10 is the highest card in hand
     assert handrank(sf) == (8, 10)
+
     
     return "OK"
