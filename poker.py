@@ -25,6 +25,13 @@ def handrank(hand):
     else:
         return (0, ranks)
 
+
+def card_ranks(cards):
+    """ Returns ranks of a hand in sorted order """
+    ranks = ["--23456789TJQKA".index(r) for r, s in cards]
+    ranks.sort(reverse=True)
+    return ranks
+    
 def test_poker():
     """ tests for functions in poker program """
     tk = "3D 3S 4H 8C AS".split()
@@ -42,5 +49,6 @@ def test_poker():
     # 1st 6 is the rank of the hand among all hands, 10 is the highest card in hand
     assert handrank(sf) == (8, 10)
 
+    assert card_ranks(sf) == [10, 9, 8, 7, 6]
     
     return "OK"
