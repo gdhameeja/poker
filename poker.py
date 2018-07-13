@@ -4,6 +4,7 @@ def besthand(hands):
 
 def handrank(hand):
     """ function to return the rank of a particular hand according to poker rules """
+    ranks = card_ranks(hand)    # card_ranks returns the ranks of the hand in the sorted order
     # straight flush
     if straight(ranks) and flush(hand):
         return (8, max(card_ranks))  # card_ranks -> 1, 2, 3, 4, 5, 6, 7, 8, 9, T, J, K, Q, A
