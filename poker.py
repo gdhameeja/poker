@@ -31,7 +31,27 @@ def card_ranks(cards):
     ranks = ["--23456789TJQKA".index(r) for r, s in cards]
     ranks.sort(reverse=True)
     return ranks
-    
+
+
+def flush(hand):
+    """ Returns True if all cards have the same suit """
+    suits = [b for a, b in hand]   # string unpacking; learnt new
+    if suits.count(suits[0]) == len(suits):
+        return True
+    return False
+
+
+def straight(ranks):
+    """ Returns True if the ordered ranks form a 5-card straight """
+    ranks = sorted(ranks)
+    for i in range(len(ranks)-1):
+        if ranks[i]+1 != ranks[i+1]:
+            return False
+    return True
+        
+
+
+
 def test_poker():
     """ tests for functions in poker program """
     tk = "3D 3S 4H 8C AS".split()
@@ -50,5 +70,8 @@ def test_poker():
     assert handrank(sf) == (8, 10)
 
     assert card_ranks(sf) == [10, 9, 8, 7, 6]
-    
+    assert straight([9, 8, 7, 6, 5]) == True
+    assert straight([6, 4, 7, 8, 9]) == False
+    assert flush(sf) == True
+    assert flush(hh) == False
     return "OK"
